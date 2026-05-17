@@ -3,8 +3,8 @@
 Event-driven automation that watches GitHub Issues and autonomously dispatches Devin sessions to remediate them — no human in the loop. Includes a live Kanban dashboard with session status, PR links, and AI-generated insights.
 
 ```
-GitHub Issue opened
-  → webhook POST /webhook/github   (or manual Remediate in dashboard)
+Simulate button  (or GitHub webhook on real issue opened)
+  → POST /simulate  (or POST /webhook/github)
   → FastAPI backend
   → Devin API v3  (POST /sessions with prompt + knowledge + playbook)
   → Devin clones repo, writes fix, opens PR
@@ -77,18 +77,19 @@ The Vite dev server proxies all API calls to `localhost:8000` automatically. Ope
 
 ---
 
-## 3 · (Optional) Enable GitHub Webhook
+## 3 · Simulate Issues (no webhook needed)
 
-To have new issues automatically trigger Devin sessions, expose the backend publicly:
+Click the **Simulate** button in the dashboard header to instantly create a Devin session with a pre-filled issue. Choose from Security, Deprecated API, or Tech Debt categories — the title and body are editable before launch.
+
+This is the fastest way to demo the full flow without any webhook setup.
+
+---
+
+## 4 · (Optional) Enable GitHub Webhook
+
+To have real GitHub issues automatically trigger Devin sessions, expose the backend publicly. Any tunneling tool works — for example with [ngrok](https://ngrok.com):
 
 ```bash
-# Install ngrok if needed
-brew install ngrok
-
-# Authenticate (one-time — get token from https://dashboard.ngrok.com)
-ngrok config add-authtoken <your-token>
-
-# Expose backend
 ngrok http 8000
 # → https://xxxx.ngrok-free.app
 ```
@@ -125,8 +126,6 @@ Then in your GitHub repo → **Settings → Webhooks → Add webhook**:
 .
 ├── Dockerfile               # Multi-stage: builds frontend → runs backend
 ├── docker-compose.yml       # Single-service setup
-├── DEMO_SCRIPT.md           # 5-minute Loom video walkthrough
-│
 ├── backend/
 │   ├── main.py              # App entry point — registers routers, serves static files
 │   ├── config.py            # All env vars and constants
