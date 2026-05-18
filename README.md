@@ -102,6 +102,26 @@ Then in your GitHub repo → **Settings → Webhooks → Add webhook**:
 
 ---
 
+## 5 · Generate Insights & View the Devin Agent
+
+Once a session reaches a terminal state, the dashboard can produce an AI summary of what Devin did and let you jump into the live agent session.
+
+**Generate insights**
+
+- Insights are triggered **automatically** when a session's PR is merged/closed, or when you click **Close** on an active session card.
+- To trigger manually at any time, hit `POST /sessions/{session_id}/insights/generate` and poll `GET /sessions/{session_id}/insights`.
+- While analysis is running the card shows an **Analyzing…** indicator. When ready, a **View Insights** button appears.
+
+**View insights**
+
+- Click **View Insights** on any session card to open the side panel showing the timeline, detected issues, action items, and a suggested follow-up prompt.
+
+**View the Devin agent session**
+
+- Click the **external-link icon** in the bottom-right of any session card to open that session directly in the Devin web app (`app.devin.ai`) — useful for watching the agent work in real time, reading shell output, or sending it a follow-up message.
+
+---
+
 ## API Reference
 
 | Method | Path | Description |
